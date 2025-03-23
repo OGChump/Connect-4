@@ -26,7 +26,8 @@ public class Connect_4 {
       String gameplay;
       
       String username;
-      drawBoard(board);
+      String username2;
+      
       System.out.println("What is your name?");
       username = input.nextLine();
       
@@ -35,12 +36,19 @@ public class Connect_4 {
       choice = input.nextLine().toLowerCase().charAt(0);
       
       if(choice == 'n') {
-         System.out.println("Would you like to play with 2 players? (Y/N)");
-         choice = input.nextLine().toLowerCase().charAt(0);
+         System.out.println("You have choose to play the 2 player mode");
+         System.out.println("Mode: 2 player");
          gameplay = "2 Player";
       } else {
-         gameplay = "Computer";
+         System.out.println("Playing the computer was never a fucking option, you only need one friend find one.");
+         System.out.println("Mode: 2 player");
+         gameplay = "2 player";
       }
+      
+      System.out.println("What is your friends name?");
+      username2 = input.nextLine();
+      
+      plays(board, username, username2);
    }
    
    /* 
@@ -51,7 +59,7 @@ public class Connect_4 {
    public static void drawBoard(int[] board) {
       for(int i = 0; i < 42; i++) {
          if(i%7 == 0) {
-            System.out.println("\n|---|---|---|---|---|---|");
+            System.out.println("\n|---|---|---|---|---|---|---|");
             System.out.print("|");
          } else {
             if(board[i] == 1) {
@@ -71,11 +79,42 @@ public class Connect_4 {
    
    /* 
    * 
-   * AIs play turn
+   * Players play turn
    *
    */
-   public static void playAI() {
+   public static void plays(int[] board, String username, String username2) {
+      Scanner input = new Scanner(System.in);
+      int turn = 2;
+      int column;
+      int position = 6;
       
+      do {
+         drawBoard(board);
+         System.out.println("");
+         if(turn%2 == 0) {
+            System.out.println("\nIts " + username + " turn!");
+         } else {
+            System.out.println("\nIts " + username2 + " turn!");
+         }
+         
+         System.out.println("What column do you want to place your piece?");
+         column = input.nextInt();
+                  
+         do{
+            if(board[position * column] != 0) {
+               position--;
+            } else {
+               break;
+            }
+         }while(board[position * column] != 0);
+         
+         if(turn%2 == 0) {
+            board[position * column] = 1;
+            turn++;
+         } else {
+            board[position * column] = 2;
+         }
+      }while(true); //Win condition needs to be here
    }
 
 }
